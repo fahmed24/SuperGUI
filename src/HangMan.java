@@ -1,5 +1,4 @@
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -23,7 +22,7 @@ public class HangMan extends javax.swing.JFrame {
 		initComponents();
 		setTitle("Hangman");
 		setLocationRelativeTo(null);
-		//getContentPane().setBackground(new java.awt.Color(0, 0, 0));
+		getContentPane().setBackground(new java.awt.Color(0, 0, 0));
 	}
 
 	/**
@@ -85,13 +84,51 @@ public class HangMan extends javax.swing.JFrame {
 		SplashScreen splashScreen = new SplashScreen(); 
 		hangMan.getContentPane().add(splashScreen);
 		hangMan.pack();
+		//Create Main menu
+		MainMenu menu = new MainMenu();
+		//Create PlayGame screen
+		PlayGame playGame = new PlayGame();
+		//Create HighScores screen
+		HighScores highScores = new HighScores();
+		//Create Credits screen
+		Credits credits = new Credits();
+
+		//When the play button is clicked hide menu and show game.
+		ActionListener playButtonClick = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				menu.setVisible(false);
+				hangMan.getContentPane().add(playGame);
+			}
+		};
+		//When the high scores button is clicked
+		ActionListener hsButtonClick = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				menu.setVisible(false);
+				hangMan.getContentPane().add(highScores);
+			}
+		};
+		//When the credits button is clicked
+		ActionListener creditsButtonClick = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				menu.setVisible(false);
+				hangMan.getContentPane().add(credits);
+			}
+		};
+
+		menu.getPlayButton().addActionListener(playButtonClick);
+		menu.getHighScoresButton().addActionListener(hsButtonClick);
+		menu.getCreditsButton().addActionListener(creditsButtonClick);
+		
+
+		
 		//Create an event to remove the splash screen
 		ActionListener taskPerformer = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				//hangMan.getContentPane().remove(splashScreen);
 				splashScreen.setVisible(false);
+				hangMan.getContentPane().add(menu);
 			}
 		};
+		//
 		int delay = 3000; // 3 second delay
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
