@@ -88,36 +88,54 @@ public class HangMan extends javax.swing.JFrame {
 		MainMenu menu = new MainMenu();
 		//Create PlayGame screen
 		PlayGame playGame = new PlayGame();
+		hangMan.getContentPane().add(playGame);
+		playGame.setVisible(false);
 		//Create HighScores screen
 		HighScores highScores = new HighScores();
+		hangMan.getContentPane().add(highScores);
+		highScores.setVisible(false);
 		//Create Credits screen
 		Credits credits = new Credits();
+		hangMan.getContentPane().add(credits);
+		credits.setVisible(false);
 
 		//When the play button is clicked hide menu and show game.
 		ActionListener playButtonClick = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				menu.setVisible(false);
-				hangMan.getContentPane().add(playGame);
+				playGame.setVisible(true);
 			}
 		};
 		//When the high scores button is clicked
 		ActionListener hsButtonClick = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				menu.setVisible(false);
-				hangMan.getContentPane().add(highScores);
+				highScores.setVisible(true);
 			}
 		};
 		//When the credits button is clicked
 		ActionListener creditsButtonClick = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				menu.setVisible(false);
-				hangMan.getContentPane().add(credits);
+				credits.setVisible(true);
 			}
 		};
+		//When back button is clicked, go back to main menu
+		ActionListener backButton = new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				credits.setVisible(false);
+				highScores.setVisible(false);
+				menu.setVisible(true);
+			}
+		};
+
 
 		menu.getPlayButton().addActionListener(playButtonClick);
 		menu.getHighScoresButton().addActionListener(hsButtonClick);
 		menu.getCreditsButton().addActionListener(creditsButtonClick);
+
+		credits.getButton().addActionListener(backButton);
+		highScores.getButton().addActionListener(backButton);
 		
 
 		
