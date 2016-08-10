@@ -1,3 +1,8 @@
+/*
+fahad ahmed, reta yousif
+cs 245
+project 1.0
+*/
 
 import javax.swing.JButton;
 
@@ -50,7 +55,7 @@ public class Credits extends javax.swing.JPanel {
 
                 jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
                 jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-                jLabel3.setText("Reta Youssif, #");
+                jLabel3.setText("Reta Youssif,   009148763");
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);

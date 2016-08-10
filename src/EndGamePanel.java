@@ -1,21 +1,30 @@
+
+import javax.swing.JPanel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/*
+fahad ahmed, reta yousif
+cs 245
+project 1.0
+*/
 
-/**
- *
- * @author fahadahmed
- */
 public class EndGamePanel extends javax.swing.JPanel {
 
 	/**
 	 * Creates new form EndGamePanel
 	 */
-	public EndGamePanel() {
+	private JPanel menu;
+	public EndGamePanel(JPanel menu) {
 		initComponents();
 		setBounds(0,0,600,400);
+		this.menu = menu;
+	}
+	public void setScore(int score) {
+		jLabel3.setText(String.valueOf(score));
 	}
 
 	/**
@@ -30,6 +39,7 @@ public class EndGamePanel extends javax.swing.JPanel {
                 jLabel1 = new javax.swing.JLabel();
                 jLabel2 = new javax.swing.JLabel();
                 jLabel3 = new javax.swing.JLabel();
+                jButtonEnd = new javax.swing.JButton();
 
                 setBackground(new java.awt.Color(0, 0, 0));
                 setPreferredSize(new java.awt.Dimension(600, 400));
@@ -46,37 +56,57 @@ public class EndGamePanel extends javax.swing.JPanel {
                 jLabel3.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel3.setText("0");
 
+                jButtonEnd.setText("End");
+                jButtonEnd.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jButtonEndActionPerformed(evt);
+                        }
+                });
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(210, Short.MAX_VALUE)
+                                .addContainerGap(205, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addGap(197, 197, 197))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jLabel2)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel3)
-                                                .addGap(246, 246, 246))))
+                                                .addGap(246, 246, 246))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(202, 202, 202))))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(jButtonEnd)
+                                .addGap(0, 0, Short.MAX_VALUE))
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(66, 66, 66)
+                                .addGap(65, 65, 65)
                                 .addComponent(jLabel1)
-                                .addGap(41, 41, 41)
+                                .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel3))
-                                .addContainerGap(220, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                                .addComponent(jButtonEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44))
                 );
         }// </editor-fold>//GEN-END:initComponents
 
+        private void jButtonEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEndActionPerformed
+                // TODO add your handling code here:
+		this.setVisible(false);
+		menu.setVisible(true);
+        }//GEN-LAST:event_jButtonEndActionPerformed
+
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
+        private javax.swing.JButton jButtonEnd;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JLabel jLabel2;
         private javax.swing.JLabel jLabel3;

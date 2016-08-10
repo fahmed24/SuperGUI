@@ -1,4 +1,8 @@
-
+/*
+fahad ahmed, reta yousif
+cs 245
+project 1.0
+*/
 import javax.swing.JButton;
 
 

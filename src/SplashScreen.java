@@ -1,13 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+fahad ahmed, reta yousif
+cs 245
+project 1.0
+*/
 
-/**
- *
- * @author fahadahmed
- */
 public class SplashScreen extends javax.swing.JPanel {
 
 	/**

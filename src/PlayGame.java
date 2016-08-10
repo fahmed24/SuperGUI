@@ -1,15 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author fahadahmed
- */
 import java.awt.Color;
+import java.util.Calendar;
+/*
+fahad ahmed, reta yousif
+cs 245
+project 1.0
+*/
+
+import java.util.GregorianCalendar;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class PlayGame extends javax.swing.JPanel {
@@ -22,23 +23,95 @@ public class PlayGame extends javax.swing.JPanel {
 	private String word;
 	private int score = 100;
 	private int count = 0;
+	private EndGamePanel endGamePanel;
+	private Random randNum;
 
-	public PlayGame() {
+	public PlayGame(JFrame hangMan, JPanel menu) {
 		initComponents();
 		setBounds(0,0,600,400);
 		
+		//Create EndGamePanel 
+		endGamePanel = new EndGamePanel(menu);
+		//Reference to hangMan JFrame
+		hangMan.getContentPane().add(endGamePanel);
+		//Hide EndGamePanel for now
+		endGamePanel.setVisible(false);
+		//Random number generator	
+		randNum = new Random();
+		//Calendar
+		dateTime();
+	}
+	public void dateTime() {
+		Thread clock = new Thread() {
+			public void run() {
+				try {
+					while(true) {
+						Calendar cal = new GregorianCalendar();
+						int day = cal.get(Calendar.DAY_OF_MONTH);
+						int month = cal.get(Calendar.MONTH) + 1;
+						int year = cal.get(Calendar.YEAR);
+						
+						int sec = cal.get(Calendar.SECOND);
+						int min = cal.get(Calendar.MINUTE);
+						int hr = cal.get(Calendar.HOUR);
+						jLabelDate.setText(month + "/" + day + "/" + year + "  " + hr + ":" + min + ":" + sec);
+						sleep(1000);
+					}
+				} catch (InterruptedException ex) {
+					Logger.getLogger(PlayGame.class.getName()).log(Level.SEVERE, null, ex);
+				}
 
-		Random randNum = new Random();
-		word = list[randNum.nextInt(6)];
+			}
+		};
+		clock.start();
+	}
+	public void resetGame() {
+		word = list[randNum.nextInt(5)];
 		generateLines();
-		System.out.println("Word is: " + word);
+		//Reset image
+		jLabelImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Hangman0.jpg")));
+		//Reset score and count and display score
+		score = 100;
+		count = 0;
+		jLabelScoreValue.setText(String.valueOf(score));
+		//Reset letter buttons
+		jButton1.setEnabled(true);
+		jButton2.setEnabled(true);
+		jButton3.setEnabled(true);
+		jButton4.setEnabled(true);
+		jButton5.setEnabled(true);
+		jButton6.setEnabled(true);
+		jButton7.setEnabled(true);
+		jButton8.setEnabled(true);
+		jButton9.setEnabled(true);
+		jButton10.setEnabled(true);
+		jButton11.setEnabled(true);
+		jButton12.setEnabled(true);
+		jButton13.setEnabled(true);
+		jButton14.setEnabled(true);
+		jButton15.setEnabled(true);
+		jButton16.setEnabled(true);
+		jButton17.setEnabled(true);
+		jButton18.setEnabled(true);
+		jButton19.setEnabled(true);
+		jButton20.setEnabled(true);
+		jButton21.setEnabled(true);
+		jButton22.setEnabled(true);
+		jButton23.setEnabled(true);
+		jButton24.setEnabled(true);
+		jButton25.setEnabled(true);
+		jButton26.setEnabled(true);
 	}
 	public void generateLines() {
 		if (word.length() < 8) {
 			jLabel8.setVisible(false);
 			jLabel10.setVisible(false);
 			jLabel11.setVisible(false);
-		}
+		} else if (word.length() > 5) {
+			jLabel8.setVisible(true);
+			jLabel10.setVisible(true);
+			jLabel11.setVisible(true);
+		} 
 		//Set all labels to blank
 		jLabel4.setText("");
 		jLabel12.setText("");
@@ -60,23 +133,16 @@ public class PlayGame extends javax.swing.JPanel {
 		//If we reach this point, the letter was not in the word.
 		//Decrement score and update hangman image.
 		//updateScoreAndImage();
-		if (letterFound == false) {
+		if (score < 50 || count == word.length()) {
+			//Show endGame panel
+			endGamePanel();
+		} else if (letterFound == false)
 			updateScoreAndImage();
-
-		}	
 
 	}
 	public void updateScoreAndImage() {
 		score -= 10;
-		if (score < 50 || count == word.length()) {
-			//Reset count and score
-			count = 0;
-			score = 100;
-			// Goto endgame panel
-		}
-		else {
-			jLabelScoreValue.setText(String.valueOf(score));
-		}
+		jLabelScoreValue.setText(String.valueOf(score));
 		switch (score) {
 			case 100: {
 				jLabelImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Hangman0.jpg")));
@@ -106,6 +172,14 @@ public class PlayGame extends javax.swing.JPanel {
 				jLabelImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Hangman6.jpg")));
 			}
 		}
+	}
+	public void endGamePanel() {
+			//Set this PlayGame panel to not visibile
+			this.setVisible(false);
+			//Show the EndGamePanel
+			endGamePanel.setVisible(true);
+			//Set score
+			endGamePanel.setScore(score);
 	}
 	public void setText(int wordIndex) {
 		switch (wordIndex) {
@@ -200,6 +274,8 @@ public class PlayGame extends javax.swing.JPanel {
                 jLabel12 = new javax.swing.JLabel();
                 jLabelScore = new javax.swing.JLabel();
                 jLabelScoreValue = new javax.swing.JLabel();
+                jButtonSkip = new javax.swing.JButton();
+                jLabelDate = new javax.swing.JLabel();
 
                 jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/letter.png"))); // NOI18N
                 jLabel7.setText("jLabel4");
@@ -211,7 +287,7 @@ public class PlayGame extends javax.swing.JPanel {
                 jLabel1.setForeground(new java.awt.Color(255, 255, 255));
                 jLabel1.setText("HangMan");
 
-                jLabelImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Hangman6.jpg"))); // NOI18N
+                jLabelImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Hangman0.jpg"))); // NOI18N
                 jLabelImage.setText("jLabel3");
 
                 jButton2.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
@@ -483,6 +559,17 @@ public class PlayGame extends javax.swing.JPanel {
                 jLabelScoreValue.setForeground(new java.awt.Color(255, 255, 255));
                 jLabelScoreValue.setText("100");
 
+                jButtonSkip.setFont(new java.awt.Font("Lucida Grande", 0, 12)); // NOI18N
+                jButtonSkip.setText("Skip");
+                jButtonSkip.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jButtonSkipActionPerformed(evt);
+                        }
+                });
+
+                jLabelDate.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+                jLabelDate.setForeground(new java.awt.Color(255, 255, 255));
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
@@ -490,17 +577,6 @@ public class PlayGame extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(jLabel1)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(jLabelScore)
-                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                                        .addGap(54, 54, 54)
-                                                                        .addComponent(jLabelScoreValue))))
-                                                .addGap(120, 120, 120)
-                                                .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(jLabel4)
@@ -518,9 +594,24 @@ public class PlayGame extends javax.swing.JPanel {
                                                 .addComponent(jLabel10)
                                                 .addGap(5, 5, 5)
                                                 .addComponent(jLabel11)
-                                                .addGap(76, 76, 76))))
+                                                .addGap(76, 76, 76))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel1)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addComponent(jLabelScore)
+                                                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                                        .addGap(54, 54, 54)
+                                                                        .addComponent(jLabelScoreValue))))
+                                                .addGap(120, 120, 120)
+                                                .addComponent(jLabelImage, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jButtonSkip, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabelDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addContainerGap())))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap(23, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -587,7 +678,11 @@ public class PlayGame extends javax.swing.JPanel {
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                         .addComponent(jLabelScore)
                                                         .addComponent(jLabelScoreValue)))
-                                        .addComponent(jLabelImage))
+                                        .addComponent(jLabelImage)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(jButtonSkip)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -789,6 +884,13 @@ public class PlayGame extends javax.swing.JPanel {
 		jButton26.setEnabled(false);
         }//GEN-LAST:event_jButton26ActionPerformed
 
+        private void jButtonSkipActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSkipActionPerformed
+                // TODO add your handling code here:
+		score = 0;
+		endGamePanel();
+
+        }//GEN-LAST:event_jButtonSkipActionPerformed
+
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton jButton1;
@@ -817,6 +919,7 @@ public class PlayGame extends javax.swing.JPanel {
         private javax.swing.JButton jButton7;
         private javax.swing.JButton jButton8;
         private javax.swing.JButton jButton9;
+        private javax.swing.JButton jButtonSkip;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JLabel jLabel10;
         private javax.swing.JLabel jLabel11;
@@ -827,6 +930,7 @@ public class PlayGame extends javax.swing.JPanel {
         private javax.swing.JLabel jLabel7;
         private javax.swing.JLabel jLabel8;
         private javax.swing.JLabel jLabel9;
+        private javax.swing.JLabel jLabelDate;
         private javax.swing.JLabel jLabelImage;
         private javax.swing.JLabel jLabelScore;
         private javax.swing.JLabel jLabelScoreValue;

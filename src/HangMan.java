@@ -1,18 +1,14 @@
 
+/*
+fahad ahmed, reta yousif
+cs 245
+project 1.0
+*/
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author fahadahmed
- */
 public class HangMan extends javax.swing.JFrame {
 
 	/**
@@ -87,9 +83,10 @@ public class HangMan extends javax.swing.JFrame {
 		//Create Main menu
 		MainMenu menu = new MainMenu();
 		//Create PlayGame screen
-		PlayGame playGame = new PlayGame();
+		PlayGame playGame = new PlayGame(hangMan, menu);
 		hangMan.getContentPane().add(playGame);
 		playGame.setVisible(false);
+
 		//Create HighScores screen
 		HighScores highScores = new HighScores();
 		hangMan.getContentPane().add(highScores);
@@ -103,6 +100,7 @@ public class HangMan extends javax.swing.JFrame {
 		ActionListener playButtonClick = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				menu.setVisible(false);
+				playGame.resetGame();
 				playGame.setVisible(true);
 			}
 		};
