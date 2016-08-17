@@ -1,4 +1,6 @@
 
+import java.io.FileReader;
+import java.io.FileWriter;
 import javax.swing.JPanel;
 
 /*
@@ -18,15 +20,28 @@ public class EndGamePanel extends javax.swing.JPanel {
 	 * Creates new form EndGamePanel
 	 */
 	private JPanel menu;
-	public EndGamePanel(JPanel menu) {
+	private FileWriter out;
+	private FileReader in;
+	private int scores[] = new int[5];
+
+	public EndGamePanel(JPanel menu, FileReader in, FileWriter out) {
 		initComponents();
 		setBounds(0,0,600,400);
 		this.menu = menu;
+		this.in = in;
+		this.out = out;
 	}
 	public void setScore(int score) {
 		jLabel3.setText(String.valueOf(score));
-	}
+		//This is where we want to compare highscores 
 
+	}
+	public void read() {
+		
+	}
+	public void write() {
+		
+	}
 	/**
 	 * This method is called from within the constructor to initialize the
 	 * form. WARNING: Do NOT modify this code. The content of this method is

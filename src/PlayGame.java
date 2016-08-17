@@ -23,7 +23,7 @@ public class PlayGame extends javax.swing.JPanel {
 	private String word;
 	private int score = 100;
 	private int count = 0;
-	private EndGamePanel endGamePanel;
+private EndGamePanel endGamePanel;
 	private Random randNum;
 
 	public PlayGame(JFrame hangMan, JPanel menu) {

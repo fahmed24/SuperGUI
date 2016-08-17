@@ -7,6 +7,10 @@ project 1.0
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.Timer;
 
 public class HangMan extends javax.swing.JFrame {
@@ -50,7 +54,7 @@ public class HangMan extends javax.swing.JFrame {
 	/**
 	 * @param args the command line arguments
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FileNotFoundException, IOException {
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -76,6 +80,13 @@ public class HangMan extends javax.swing.JFrame {
 
 		//Create main GUI window 
 		HangMan hangMan = new HangMan();
+
+		// Read and write from file
+		FileReader in = new FileReader("highScores.txt");
+		FileWriter out = new FileWriter("highScores.txt");
+
+
+
 		//Create splash screen
 		SplashScreen splashScreen = new SplashScreen(); 
 		hangMan.getContentPane().add(splashScreen);
@@ -83,9 +94,10 @@ public class HangMan extends javax.swing.JFrame {
 		//Create Main menu
 		MainMenu menu = new MainMenu();
 		//Create PlayGame screen
-		PlayGame playGame = new PlayGame(hangMan, menu);
-		hangMan.getContentPane().add(playGame);
-		playGame.setVisible(false);
+		//Temporary removal of hangman to jump to circleGame
+		//PlayGame playGame = new PlayGame(hangMan, menu);
+		//hangMan.getContentPane().add(playGame);
+		//playGame.setVisible(false);
 
 		//Create HighScores screen
 		HighScores highScores = new HighScores();
@@ -96,12 +108,19 @@ public class HangMan extends javax.swing.JFrame {
 		hangMan.getContentPane().add(credits);
 		credits.setVisible(false);
 
+		//Create ColorGame panel here
+		ColorGame colorGame = new ColorGame(menu, hangMan, in, out);
+		hangMan.getContentPane().add(colorGame);
+		colorGame.setVisible(false);
+
 		//When the play button is clicked hide menu and show game.
 		ActionListener playButtonClick = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				menu.setVisible(false);
-				playGame.resetGame();
-				playGame.setVisible(true);
+				//playGame.resetGame();
+				//playGame.setVisible(true);
+				colorGame.setVisible(true);
+
 			}
 		};
 		//When the high scores button is clicked
