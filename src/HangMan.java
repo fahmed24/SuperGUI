@@ -7,10 +7,16 @@ project 1.0
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.Timer;
 
 public class HangMan extends javax.swing.JFrame {
@@ -18,11 +24,19 @@ public class HangMan extends javax.swing.JFrame {
 	/**
 	 * Creates new form HangMan
 	 */
+	private BufferedReader br;
+	private BufferedWriter bw;
+	
 	public HangMan() {
 		initComponents();
 		setTitle("Hangman");
 		setLocationRelativeTo(null);
+		setSize(600, 400);
 		getContentPane().setBackground(new java.awt.Color(0, 0, 0));
+	}
+	public void windowClosing(WindowEvent e) throws IOException {
+		br.close();
+		bw.close();
 	}
 
 	/**
@@ -35,7 +49,6 @@ public class HangMan extends javax.swing.JFrame {
         private void initComponents() {
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-                setPreferredSize(new java.awt.Dimension(600, 400));
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
@@ -83,8 +96,14 @@ public class HangMan extends javax.swing.JFrame {
 
 		// Read and write from file
 		FileReader in = new FileReader("highScores.txt");
-		FileWriter out = new FileWriter("highScores.txt");
 
+		FileWriter out = new FileWriter("highScores.txt", true);
+
+		BufferedReader br = new BufferedReader(in);
+		BufferedWriter bw = new BufferedWriter(out);
+
+		
+		
 
 
 		//Create splash screen
@@ -93,11 +112,17 @@ public class HangMan extends javax.swing.JFrame {
 		hangMan.pack();
 		//Create Main menu
 		MainMenu menu = new MainMenu();
+
+		//Create ColorGame panel here
+		ColorGame colorGame = new ColorGame(menu, hangMan, br, bw);
+		hangMan.getContentPane().add(colorGame);
+		colorGame.setVisible(false);
+
 		//Create PlayGame screen
 		//Temporary removal of hangman to jump to circleGame
-		//PlayGame playGame = new PlayGame(hangMan, menu);
-		//hangMan.getContentPane().add(playGame);
-		//playGame.setVisible(false);
+		PlayGame playGame = new PlayGame(hangMan, menu, colorGame);
+		hangMan.getContentPane().add(playGame);
+		playGame.setVisible(false);
 
 		//Create HighScores screen
 		HighScores highScores = new HighScores();
@@ -108,18 +133,13 @@ public class HangMan extends javax.swing.JFrame {
 		hangMan.getContentPane().add(credits);
 		credits.setVisible(false);
 
-		//Create ColorGame panel here
-		ColorGame colorGame = new ColorGame(menu, hangMan, in, out);
-		hangMan.getContentPane().add(colorGame);
-		colorGame.setVisible(false);
 
 		//When the play button is clicked hide menu and show game.
 		ActionListener playButtonClick = new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				menu.setVisible(false);
-				//playGame.resetGame();
-				//playGame.setVisible(true);
-				colorGame.setVisible(true);
+				playGame.resetGame();
+				playGame.setVisible(true);
 
 			}
 		};
@@ -154,7 +174,6 @@ public class HangMan extends javax.swing.JFrame {
 		credits.getButton().addActionListener(backButton);
 		highScores.getButton().addActionListener(backButton);
 		
-
 		
 		//Create an event to remove the splash screen
 		ActionListener taskPerformer = new ActionListener() {

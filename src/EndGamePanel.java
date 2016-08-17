@@ -1,7 +1,21 @@
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,28 +33,90 @@ public class EndGamePanel extends javax.swing.JPanel {
 	/**
 	 * Creates new form EndGamePanel
 	 */
+	private JFrame main;
 	private JPanel menu;
-	private FileWriter out;
-	private FileReader in;
+	private BufferedReader br;
+	private BufferedWriter bw;
 	private int scores[] = new int[5];
+	private ArrayList<String> names;
+	private ArrayList<Integer> values;
+	private Map playerScores = new HashMap();
+	private String initials;
+	private int score;
+	private int hangManScore;
 
-	public EndGamePanel(JPanel menu, FileReader in, FileWriter out) {
+	public EndGamePanel(JFrame main, JPanel menu, BufferedReader br, BufferedWriter bw) {
 		initComponents();
 		setBounds(0,0,600,400);
+		this.main = main;
 		this.menu = menu;
-		this.in = in;
-		this.out = out;
+		this.br = br;
+		this.bw = bw;
+		//read();
 	}
 	public void setScore(int score) {
+		this.score = score;
 		jLabel3.setText(String.valueOf(score));
-		//This is where we want to compare highscores 
+		try {
+			read();
+			write();
+		} catch (IOException ex) {
+			Logger.getLogger(EndGamePanel.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		score = score + hangManScore; 
+	}
+	public void setHangManScore(int score) {
+		hangManScore = score;
+	}
+	public void read() throws IOException {
+		String line = "";
+		String lines[] = new String[2];
+		names = new ArrayList<>();
+		values = new ArrayList<>();
+		br.mark(500);
+		while (line != null) {
+			line = br.readLine();
+			if (line != null) {
+				lines = line.split(" ");
+				names.add(lines[0]);
+				values.add(Integer.valueOf(lines[1]));
+				playerScores.put(lines[1], lines[0]);
+			}
+		}
+		br.reset();
+		
+		//System.out.println(playerScores.get("433"));
+		Collections.sort(values);
+		Collections.reverse(values);
+		inputHighScore(values);
 
 	}
-	public void read() {
-		
+	public void write() throws IOException {
+		bw = new BufferedWriter(new FileWriter("highScores.txt", false));
+		String initial = "";
+		for (int i = 0; i < 6; i++ ) {
+			initial = playerScores.get(values.get(i).toString()).toString();
+			bw.write(initial + " " + values.get(i) + "\n");
+		}
+		bw.flush();
+		read();
 	}
-	public void write() {
-		
+	public void inputHighScore(ArrayList<Integer> values) {
+		jLabelEnterInitials.setVisible(false);
+		jTextFieldInitials.setVisible(false);
+		if (score > values.get(5)) {
+			//values.set(5, score);
+			values.add(score);
+		} else {
+			hideHighScoreComponents();
+		}
+	}
+	public void hideHighScoreComponents() {
+		jLabelHighScore.setVisible(false);
+		jButtonHSYes.setVisible(false);
+		jButtonHSNo.setVisible(false);
+		jLabelEnterInitials.setVisible(false);
+		jTextFieldInitials.setVisible(false);
 	}
 	/**
 	 * This method is called from within the constructor to initialize the
@@ -55,6 +131,11 @@ public class EndGamePanel extends javax.swing.JPanel {
                 jLabel2 = new javax.swing.JLabel();
                 jLabel3 = new javax.swing.JLabel();
                 jButtonEnd = new javax.swing.JButton();
+                jLabelHighScore = new javax.swing.JLabel();
+                jButtonHSYes = new javax.swing.JButton();
+                jButtonHSNo = new javax.swing.JButton();
+                jTextFieldInitials = new javax.swing.JTextField();
+                jLabelEnterInitials = new javax.swing.JLabel();
 
                 setBackground(new java.awt.Color(0, 0, 0));
                 setPreferredSize(new java.awt.Dimension(600, 400));
@@ -78,36 +159,87 @@ public class EndGamePanel extends javax.swing.JPanel {
                         }
                 });
 
+                jLabelHighScore.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+                jLabelHighScore.setForeground(new java.awt.Color(255, 255, 255));
+                jLabelHighScore.setText("New HighScore! Save?");
+
+                jButtonHSYes.setText("YES");
+                jButtonHSYes.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jButtonHSYesActionPerformed(evt);
+                        }
+                });
+
+                jButtonHSNo.setText("NO");
+                jButtonHSNo.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jButtonHSNoActionPerformed(evt);
+                        }
+                });
+
+                jTextFieldInitials.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jTextFieldInitialsActionPerformed(evt);
+                        }
+                });
+
+                jLabelEnterInitials.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+                jLabelEnterInitials.setForeground(new java.awt.Color(255, 255, 255));
+                jLabelEnterInitials.setText("Enter Initials: ");
+
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(205, Short.MAX_VALUE)
+                                .addGap(49, 49, 49)
+                                .addComponent(jButtonEnd)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(204, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jLabel2)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel3)
-                                                .addGap(246, 246, 246))
+                                                .addGap(257, 257, 257))
                                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addComponent(jLabel1)
-                                                .addGap(202, 202, 202))))
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jButtonEnd)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                                .addGap(215, 215, 215))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabelHighScore, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGroup(layout.createSequentialGroup()
+                                                                .addComponent(jButtonHSYes, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addGap(122, 122, 122)
+                                                                .addComponent(jButtonHSNo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(167, 167, 167))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                                .addComponent(jLabelEnterInitials)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextFieldInitials, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(220, 220, 220))))
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(65, 65, 65)
+                                .addGap(36, 36, 36)
                                 .addComponent(jLabel1)
-                                .addGap(42, 42, 42)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel2)
                                         .addComponent(jLabel3))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                                .addComponent(jLabelHighScore)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButtonHSYes)
+                                        .addComponent(jButtonHSNo, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabelEnterInitials)
+                                        .addComponent(jTextFieldInitials, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(45, 45, 45)
                                 .addComponent(jButtonEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(44, 44, 44))
                 );
@@ -119,11 +251,33 @@ public class EndGamePanel extends javax.swing.JPanel {
 		menu.setVisible(true);
         }//GEN-LAST:event_jButtonEndActionPerformed
 
+        private void jTextFieldInitialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInitialsActionPerformed
+		initials = jTextFieldInitials.getText();
+		playerScores.put(String.valueOf(score), initials);
+        }//GEN-LAST:event_jTextFieldInitialsActionPerformed
+
+        private void jButtonHSNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHSNoActionPerformed
+                // TODO add your handling code here:
+		this.setVisible(false);
+		menu.setVisible(true);
+        }//GEN-LAST:event_jButtonHSNoActionPerformed
+
+        private void jButtonHSYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHSYesActionPerformed
+                // TODO add your handling code here:
+		jLabelEnterInitials.setVisible(true);
+		jTextFieldInitials.setVisible(true);
+        }//GEN-LAST:event_jButtonHSYesActionPerformed
+
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton jButtonEnd;
+        private javax.swing.JButton jButtonHSNo;
+        private javax.swing.JButton jButtonHSYes;
         private javax.swing.JLabel jLabel1;
         private javax.swing.JLabel jLabel2;
         private javax.swing.JLabel jLabel3;
+        private javax.swing.JLabel jLabelEnterInitials;
+        private javax.swing.JLabel jLabelHighScore;
+        private javax.swing.JTextField jTextFieldInitials;
         // End of variables declaration//GEN-END:variables
 }

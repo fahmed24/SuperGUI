@@ -23,19 +23,21 @@ public class PlayGame extends javax.swing.JPanel {
 	private String word;
 	private int score = 100;
 	private int count = 0;
+	private JPanel colorGame;
 private EndGamePanel endGamePanel;
 	private Random randNum;
 
-	public PlayGame(JFrame hangMan, JPanel menu) {
+	public PlayGame(JFrame hangMan, JPanel menu, JPanel colorGame) {
 		initComponents();
 		setBounds(0,0,600,400);
+		this.colorGame = colorGame;
 		
 		//Create EndGamePanel 
-		endGamePanel = new EndGamePanel(menu);
+		//endGamePanel = new EndGamePanel(menu);
 		//Reference to hangMan JFrame
-		hangMan.getContentPane().add(endGamePanel);
+		//hangMan.getContentPane().add(endGamePanel);
 		//Hide EndGamePanel for now
-		endGamePanel.setVisible(false);
+		//endGamePanel.setVisible(false);
 		//Random number generator	
 		randNum = new Random();
 		//Calendar
@@ -176,10 +178,7 @@ private EndGamePanel endGamePanel;
 	public void endGamePanel() {
 			//Set this PlayGame panel to not visibile
 			this.setVisible(false);
-			//Show the EndGamePanel
-			endGamePanel.setVisible(true);
-			//Set score
-			endGamePanel.setScore(score);
+			colorGame.setVisible(true);
 	}
 	public void setText(int wordIndex) {
 		switch (wordIndex) {
@@ -888,6 +887,7 @@ private EndGamePanel endGamePanel;
                 // TODO add your handling code here:
 		score = 0;
 		endGamePanel();
+		//colorGame.setVisible(true);
 
         }//GEN-LAST:event_jButtonSkipActionPerformed
 

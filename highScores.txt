@@ -1,0 +1,6 @@
+bowser 564
+toad 500
+mario 460
+yoshi 433
+peach 345
+luigi 250
