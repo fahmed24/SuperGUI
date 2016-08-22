@@ -38,7 +38,7 @@ public class HangMan extends javax.swing.JFrame {
 	}
 	public void windowClosing(WindowEvent e) throws IOException {
 		br.close();
-		bw.close();
+		//bw.close();
 	}
 
 	/**
@@ -97,12 +97,6 @@ public class HangMan extends javax.swing.JFrame {
 		HangMan hangMan = new HangMan();
 
 		// Read and write from file
-		FileReader in = new FileReader("highScores.txt");
-
-		FileWriter out = new FileWriter("highScores.txt", true);
-
-		BufferedReader br = new BufferedReader(in);
-		BufferedWriter bw = new BufferedWriter(out);
 
 		
 		
@@ -117,7 +111,7 @@ public class HangMan extends javax.swing.JFrame {
 
 
 		//Create ColorGame panel here
-		ColorGame colorGame = new ColorGame(menu, hangMan, br, bw);
+		ColorGame colorGame = new ColorGame(menu, hangMan);
 		hangMan.getContentPane().add(colorGame);
 		colorGame.setVisible(false);
 
@@ -131,7 +125,7 @@ public class HangMan extends javax.swing.JFrame {
 
 
 		//Create HighScores screen
-		HighScores highScores = new HighScores(br);
+		HighScores highScores = new HighScores();
 		hangMan.getContentPane().add(highScores);
 		highScores.setVisible(false);
 		//Create Credits screen

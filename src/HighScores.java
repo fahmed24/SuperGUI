@@ -4,6 +4,7 @@ cs 245
 project 1.0
 */
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import javax.swing.JButton;
 
@@ -22,16 +23,19 @@ public class HighScores extends javax.swing.JPanel {
 	/**
 	 * Creates new form HighScores
 	 */
+	private FileReader in;
 	private BufferedReader br;
 
-	public HighScores(BufferedReader br) {
+
+	public HighScores() {
 		initComponents();
 		setBounds(0,0,600,400);
-		this.br = br;
 		//Read from highscores file and populate HighScores page
 	}
 
 	public void readAndPopulate() throws IOException {
+		in = new FileReader("highScores.txt");
+		br = new BufferedReader(in);
 		//String line = "";
 		String lines[] = new String[6];
 		//String lines[] = new String[2];
@@ -47,6 +51,7 @@ public class HighScores extends javax.swing.JPanel {
 		jLabel4Hs.setText(lines[3]);
 		jLabel5Hs.setText(lines[4]);
 		jLabel6Hs.setText(lines[5]);
+		br.close();
 	}
 	/**
 	 * This method is called from within the constructor to initialize the

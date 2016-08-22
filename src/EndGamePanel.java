@@ -1,6 +1,7 @@
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,8 +36,6 @@ public class EndGamePanel extends javax.swing.JPanel {
 	 */
 	private JFrame main;
 	private JPanel menu;
-	private BufferedReader br;
-	private BufferedWriter bw;
 	//private int scores[] = new int[5];
 	//private ArrayList<String> names;
 	//private ArrayList<Integer> values;
@@ -45,23 +44,29 @@ public class EndGamePanel extends javax.swing.JPanel {
 	private int score;
 	//private int scoresIndex[] = new int[600];
 
+	private FileReader in;
+	private FileWriter out;
+	private BufferedReader br;
+	private BufferedWriter bw;
+
 
 	private ArrayList<Score> scores;
 
-	public EndGamePanel(JFrame main, JPanel menu, BufferedReader br, BufferedWriter bw) {
+	public EndGamePanel(JFrame main, JPanel menu) throws FileNotFoundException, IOException {
 		initComponents();
 		setBounds(0,0,600,400);
 		this.main = main;
 		this.menu = menu;
-		this.br = br;
-		this.bw = bw;
-		//read();
 	}
-	public void setScore(int score) {
+	public void setScore(int score) throws FileNotFoundException, IOException {
 		this.score = score;
 		jLabel3.setText(String.valueOf(score));
 
 		//Read file
+		in = new FileReader("highScores.txt");
+		out = new FileWriter("highScores.txt", true);
+		br = new BufferedReader(in);
+		bw = new BufferedWriter(out);
 
 		try {
 			initialRead();
@@ -89,20 +94,32 @@ public class EndGamePanel extends javax.swing.JPanel {
 	}
 	
 	public void appendToFile() throws IOException {
-		scores.add(new Score(initials, score));
-		//bw.write(initials + " " + score);
+		
+		boolean exitAlready = true;
+
+		for (Score score : scores) {
+			if (score.getName().equals(initials)) {
+				exitAlready = false;
+				if (score.getScore() < this.score) {
+					//JOptionPane.showMessageDialog(null, "");
+					score.setScore(this.score);
+				} else {
+					JOptionPane.showMessageDialog(null, "Highest score recorded already for you! Not Saved.");
+				}
+			}
+		}
+		if (exitAlready)
+			scores.add(new Score(initials, score));
+		
 		Collections.sort(scores, new Score());
 		Collections.reverse(scores);
-		for (Score score : scores) {
-			System.out.println(score.getName() + " " + score.getScore());
-		}
 	}
 	
 	public void writeToFile() throws IOException {
 		//boolean inputUser = true;
 		bw = new BufferedWriter(new FileWriter("highScores.txt", false));
 		for (int i = 0; i < 6; i++ ) {
-			bw.write(scores.get(i).getName()+ " " + score + "\n");
+			bw.write(scores.get(i).getName()+ " " + scores.get(i).getScore() + "\n");
 		}
 		bw.flush();
 	}
@@ -110,8 +127,28 @@ public class EndGamePanel extends javax.swing.JPanel {
 	public void inputHighScore() throws IOException {
 		jLabelEnterInitials.setVisible(false);
 		jTextFieldInitials.setVisible(false);
-		if (score < scores.get(5).getScore()) 
+		if (score < scores.get(5).getScore()) {
 			hideHighScoreComponents();
+		}
+		
+	}
+	public void end() {
+		this.setVisible(false);
+		menu.setVisible(true);
+		jTextFieldInitials.setEnabled(true);
+		jButtonHSYes.setEnabled(true);
+		jButtonHSNo.setEnabled(true);
+		try {
+			bw.close();
+			br.close();
+		} catch (IOException ex) {
+			Logger.getLogger(EndGamePanel.class.getName()).log(Level.SEVERE, null, ex);
+		}
+		jLabelHighScore.setVisible(true);
+		jButtonHSYes.setVisible(true);
+		jButtonHSNo.setVisible(true);
+		jLabelEnterInitials.setVisible(true);
+		jTextFieldInitials.setVisible(true);
 	}
 	public void hideHighScoreComponents() {
 		jLabelHighScore.setVisible(false);
@@ -249,9 +286,7 @@ public class EndGamePanel extends javax.swing.JPanel {
         }// </editor-fold>//GEN-END:initComponents
 
         private void jButtonEndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEndActionPerformed
-                // TODO add your handling code here:
-		this.setVisible(false);
-		menu.setVisible(true);
+		end();
         }//GEN-LAST:event_jButtonEndActionPerformed
 
         private void jTextFieldInitialsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldInitialsActionPerformed
@@ -260,6 +295,9 @@ public class EndGamePanel extends javax.swing.JPanel {
 			appendToFile();
 			writeToFile();
 			jTextFieldInitials.setEnabled(false);
+			jButtonHSNo.setEnabled(false);
+			jButtonHSYes.setEnabled(false);
+			jTextFieldInitials.setText("");
 		} catch (IOException ex) {
 			Logger.getLogger(EndGamePanel.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -267,8 +305,7 @@ public class EndGamePanel extends javax.swing.JPanel {
 
         private void jButtonHSNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHSNoActionPerformed
                 // TODO add your handling code here:
-		this.setVisible(false);
-		menu.setVisible(true);
+		end();
         }//GEN-LAST:event_jButtonHSNoActionPerformed
 
         private void jButtonHSYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonHSYesActionPerformed

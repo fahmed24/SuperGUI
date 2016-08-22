@@ -1,6 +1,6 @@
-bowser 500
-fahad 500
-yoshi 500
-peach 500
-toad 500
-luigi 500
+fahad 600
+yoshi 470
+peach 350
+bowser 340
+luigi 230
+mario 200

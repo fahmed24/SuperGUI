@@ -38,13 +38,13 @@ public class ColorGame extends javax.swing.JPanel {
 	private EndGamePanel endGamePanel;
 	private PlayGame playGame;
 
-	public ColorGame(JPanel menu, JFrame hangMan, BufferedReader br, BufferedWriter bw) throws IOException {
+	public ColorGame(JPanel menu, JFrame hangMan) throws IOException {
 		initComponents();
 		setBounds(0,0,600,400);
 		random = new Random();
 
 		//Create EndGamePanel 
-		endGamePanel = new EndGamePanel(hangMan, menu, br, bw);
+		endGamePanel = new EndGamePanel(hangMan, menu);
 		//Reference to hangMan JFrame
 		hangMan.getContentPane().add(endGamePanel);
 		//Hide EndGamePanel for now
@@ -134,6 +134,7 @@ public class ColorGame extends javax.swing.JPanel {
 			endGamePanel.setVisible(true);
 			//Set score
 			endGamePanel.setScore(hangManScore + score);
+			score = 0;
 	}
 	/**
 	 * This method is called from within the constructor to initialize the

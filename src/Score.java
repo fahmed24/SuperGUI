@@ -21,6 +21,9 @@ public class Score implements Comparator<Score> {
 	public String getName() {
 		return name;
 	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public Score() {
 	}
 	public Score(String name, int score) {
