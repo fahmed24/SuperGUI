@@ -3,6 +3,8 @@ fahad ahmed, reta yousif
 cs 245
 project 1.0
 */
+import java.io.BufferedReader;
+import java.io.IOException;
 import javax.swing.JButton;
 
 /*
@@ -20,11 +22,32 @@ public class HighScores extends javax.swing.JPanel {
 	/**
 	 * Creates new form HighScores
 	 */
-	public HighScores() {
+	private BufferedReader br;
+
+	public HighScores(BufferedReader br) {
 		initComponents();
 		setBounds(0,0,600,400);
+		this.br = br;
+		//Read from highscores file and populate HighScores page
 	}
 
+	public void readAndPopulate() throws IOException {
+		//String line = "";
+		String lines[] = new String[6];
+		//String lines[] = new String[2];
+		br.mark(500);
+		for (int i = 0; i < lines.length; i++) {
+			lines[i] = br.readLine();
+		}
+		br.reset();
+
+		jLabel1Hs.setText(lines[0]);
+		jLabel2Hs.setText(lines[1]);
+		jLabel3Hs.setText(lines[2]);
+		jLabel4Hs.setText(lines[3]);
+		jLabel5Hs.setText(lines[4]);
+		jLabel6Hs.setText(lines[5]);
+	}
 	/**
 	 * This method is called from within the constructor to initialize the
 	 * form. WARNING: Do NOT modify this code. The content of this method is
@@ -36,9 +59,12 @@ public class HighScores extends javax.swing.JPanel {
 
                 jLabel1 = new javax.swing.JLabel();
                 jButton1 = new javax.swing.JButton();
-                jLabel2 = new javax.swing.JLabel();
-                jLabel3 = new javax.swing.JLabel();
-                jLabel4 = new javax.swing.JLabel();
+                jLabel1Hs = new javax.swing.JLabel();
+                jLabel2Hs = new javax.swing.JLabel();
+                jLabel3Hs = new javax.swing.JLabel();
+                jLabel4Hs = new javax.swing.JLabel();
+                jLabel5Hs = new javax.swing.JLabel();
+                jLabel6Hs = new javax.swing.JLabel();
 
                 setBackground(new java.awt.Color(0, 0, 0));
 
@@ -54,17 +80,29 @@ public class HighScores extends javax.swing.JPanel {
                         }
                 });
 
-                jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-                jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-                jLabel2.setText("ABC.....00000");
+                jLabel1Hs.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+                jLabel1Hs.setForeground(new java.awt.Color(255, 255, 255));
+                jLabel1Hs.setText("ABC.....00000");
 
-                jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-                jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-                jLabel3.setText("ABC.....00000");
+                jLabel2Hs.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+                jLabel2Hs.setForeground(new java.awt.Color(255, 255, 255));
+                jLabel2Hs.setText("ABC.....00000");
 
-                jLabel4.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
-                jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-                jLabel4.setText("ABC.....00000");
+                jLabel3Hs.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+                jLabel3Hs.setForeground(new java.awt.Color(255, 255, 255));
+                jLabel3Hs.setText("ABC.....00000");
+
+                jLabel4Hs.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+                jLabel4Hs.setForeground(new java.awt.Color(255, 255, 255));
+                jLabel4Hs.setText("ABC.....00000");
+
+                jLabel5Hs.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+                jLabel5Hs.setForeground(new java.awt.Color(255, 255, 255));
+                jLabel5Hs.setText("ABC.....00000");
+
+                jLabel6Hs.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+                jLabel6Hs.setForeground(new java.awt.Color(255, 255, 255));
+                jLabel6Hs.setText("ABC.....00000");
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
                 this.setLayout(layout);
@@ -77,27 +115,37 @@ public class HighScores extends javax.swing.JPanel {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(jLabel4))
-                                                .addGap(11, 11, 11)))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel6Hs)
+                                                        .addComponent(jLabel5Hs)
+                                                        .addComponent(jLabel4Hs)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(jLabel1Hs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(jLabel2Hs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(jLabel3Hs))))
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(231, 231, 231))
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(80, 80, 80)
+                                .addContainerGap(76, Short.MAX_VALUE)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
+                                .addComponent(jLabel1Hs)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 125, Short.MAX_VALUE)
+                                .addComponent(jLabel2Hs)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3Hs)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4Hs)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5Hs)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel6Hs)
+                                .addGap(57, 57, 57)
                                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(39, 39, 39))
                 );
@@ -111,9 +159,12 @@ public class HighScores extends javax.swing.JPanel {
         // Variables declaration - do not modify//GEN-BEGIN:variables
         private javax.swing.JButton jButton1;
         private javax.swing.JLabel jLabel1;
-        private javax.swing.JLabel jLabel2;
-        private javax.swing.JLabel jLabel3;
-        private javax.swing.JLabel jLabel4;
+        private javax.swing.JLabel jLabel1Hs;
+        private javax.swing.JLabel jLabel2Hs;
+        private javax.swing.JLabel jLabel3Hs;
+        private javax.swing.JLabel jLabel4Hs;
+        private javax.swing.JLabel jLabel5Hs;
+        private javax.swing.JLabel jLabel6Hs;
         // End of variables declaration//GEN-END:variables
 
 	public JButton getButton() {

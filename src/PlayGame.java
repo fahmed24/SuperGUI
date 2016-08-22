@@ -23,14 +23,14 @@ public class PlayGame extends javax.swing.JPanel {
 	private String word;
 	private int score = 100;
 	private int count = 0;
-	private JPanel colorGame;
-private EndGamePanel endGamePanel;
+	public ColorGame colorGame;
+	private EndGamePanel endGamePanel;
 	private Random randNum;
 
-	public PlayGame(JFrame hangMan, JPanel menu, JPanel colorGame) {
+	public PlayGame(JFrame hangMan, JPanel menu, ColorGame colorGame) {
 		initComponents();
 		setBounds(0,0,600,400);
-		this.colorGame = colorGame;
+		this.colorGame = colorGame;	
 		
 		//Create EndGamePanel 
 		//endGamePanel = new EndGamePanel(menu);
@@ -40,8 +40,12 @@ private EndGamePanel endGamePanel;
 		//endGamePanel.setVisible(false);
 		//Random number generator	
 		randNum = new Random();
+		
 		//Calendar
 		dateTime();
+	}
+	public int getScore() {
+		return score;
 	}
 	public void dateTime() {
 		Thread clock = new Thread() {
@@ -179,6 +183,7 @@ private EndGamePanel endGamePanel;
 			//Set this PlayGame panel to not visibile
 			this.setVisible(false);
 			colorGame.setVisible(true);
+			colorGame.setHangManScore(score);
 	}
 	public void setText(int wordIndex) {
 		switch (wordIndex) {

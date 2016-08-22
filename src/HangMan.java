@@ -17,6 +17,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 public class HangMan extends javax.swing.JFrame {
@@ -113,19 +115,23 @@ public class HangMan extends javax.swing.JFrame {
 		//Create Main menu
 		MainMenu menu = new MainMenu();
 
+
 		//Create ColorGame panel here
 		ColorGame colorGame = new ColorGame(menu, hangMan, br, bw);
 		hangMan.getContentPane().add(colorGame);
 		colorGame.setVisible(false);
 
 		//Create PlayGame screen
+
 		//Temporary removal of hangman to jump to circleGame
 		PlayGame playGame = new PlayGame(hangMan, menu, colorGame);
 		hangMan.getContentPane().add(playGame);
 		playGame.setVisible(false);
 
+
+
 		//Create HighScores screen
-		HighScores highScores = new HighScores();
+		HighScores highScores = new HighScores(br);
 		hangMan.getContentPane().add(highScores);
 		highScores.setVisible(false);
 		//Create Credits screen
@@ -148,6 +154,12 @@ public class HangMan extends javax.swing.JFrame {
 			public void actionPerformed(ActionEvent evt) {
 				menu.setVisible(false);
 				highScores.setVisible(true);
+				try {
+					//Read and populate high scores page
+					highScores.readAndPopulate();
+				} catch (IOException ex) {
+					Logger.getLogger(HangMan.class.getName()).log(Level.SEVERE, null, ex);
+				}
 			}
 		};
 		//When the credits button is clicked

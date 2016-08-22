@@ -32,9 +32,11 @@ public class ColorGame extends javax.swing.JPanel {
 	private Random random;
 	private String text;
 	private String fontColor;
+	private int hangManScore = 0;
 	private int score = 0;
 	private int roundCount = 1;
 	private EndGamePanel endGamePanel;
+	private PlayGame playGame;
 
 	public ColorGame(JPanel menu, JFrame hangMan, BufferedReader br, BufferedWriter bw) throws IOException {
 		initComponents();
@@ -51,8 +53,8 @@ public class ColorGame extends javax.swing.JPanel {
 		handleText();
 		dateTime();
 	}
-	public void setScore(int hscore) {
-		this.score = hscore;
+	public void setHangManScore(int score) {
+		this.hangManScore = score;
 	}
 	//Change the text and color
 	public void dateTime() {
@@ -131,7 +133,7 @@ public class ColorGame extends javax.swing.JPanel {
 			//Show the EndGamePanel
 			endGamePanel.setVisible(true);
 			//Set score
-			endGamePanel.setScore(score);
+			endGamePanel.setScore(hangManScore + score);
 	}
 	/**
 	 * This method is called from within the constructor to initialize the
