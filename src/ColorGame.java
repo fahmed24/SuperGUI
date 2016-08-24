@@ -37,8 +37,10 @@ public class ColorGame extends javax.swing.JPanel {
 	public ColorGame(Sodoku sodoku) throws IOException {
 		initComponents();
 		setBounds(0,0,600,400);
+
 		random = new Random();
 		this.sodoku = sodoku;
+
 
 		handleText();
 		dateTime();
@@ -152,6 +154,14 @@ public class ColorGame extends javax.swing.JPanel {
 
                 jButtonRed.setBackground(new java.awt.Color(0, 0, 0));
                 jButtonRed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redCircle.png"))); // NOI18N
+                jButtonRed.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                                jButtonRedMouseExited(evt);
+                        }
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                jButtonRedMouseEntered(evt);
+                        }
+                });
                 jButtonRed.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jButtonRedActionPerformed(evt);
@@ -161,6 +171,14 @@ public class ColorGame extends javax.swing.JPanel {
                 jButtonGreen.setBackground(new java.awt.Color(0, 0, 0));
                 jButtonGreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/greenCircle.png"))); // NOI18N
                 jButtonGreen.setBounds(new java.awt.Rectangle(0, 0, 97, 29));
+                jButtonGreen.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                                jButtonGreenMouseExited(evt);
+                        }
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                jButtonGreenMouseEntered(evt);
+                        }
+                });
                 jButtonGreen.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jButtonGreenActionPerformed(evt);
@@ -169,6 +187,14 @@ public class ColorGame extends javax.swing.JPanel {
 
                 jButtonBlue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/blueCircle.png"))); // NOI18N
                 jButtonBlue.setBounds(new java.awt.Rectangle(0, 0, 97, 29));
+                jButtonBlue.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                                jButtonBlueMouseExited(evt);
+                        }
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                jButtonBlueMouseEntered(evt);
+                        }
+                });
                 jButtonBlue.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jButtonBlueActionPerformed(evt);
@@ -176,6 +202,14 @@ public class ColorGame extends javax.swing.JPanel {
                 });
 
                 jButtonPurple.setIcon(new javax.swing.ImageIcon(getClass().getResource("/purpleCircle.png"))); // NOI18N
+                jButtonPurple.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                                jButtonPurpleMouseExited(evt);
+                        }
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                jButtonPurpleMouseEntered(evt);
+                        }
+                });
                 jButtonPurple.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jButtonPurpleActionPerformed(evt);
@@ -183,7 +217,14 @@ public class ColorGame extends javax.swing.JPanel {
                 });
 
                 jButtonYellow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/yellowCircle.png"))); // NOI18N
-                jButtonYellow.setBounds(new java.awt.Rectangle(0, 0, 97, 29));
+                jButtonYellow.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseExited(java.awt.event.MouseEvent evt) {
+                                jButtonYellowMouseExited(evt);
+                        }
+                        public void mouseEntered(java.awt.event.MouseEvent evt) {
+                                jButtonYellowMouseEntered(evt);
+                        }
+                });
                 jButtonYellow.addActionListener(new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent evt) {
                                 jButtonYellowActionPerformed(evt);
@@ -278,6 +319,56 @@ public class ColorGame extends javax.swing.JPanel {
 		roundCount++;
 		handleText();
         }//GEN-LAST:event_jButtonYellowActionPerformed
+
+        private void jButtonRedMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRedMouseEntered
+                // TODO add your handling code here:
+		jButtonRed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redCircleH.png")));
+        }//GEN-LAST:event_jButtonRedMouseEntered
+
+        private void jButtonRedMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonRedMouseExited
+                // TODO add your handling code here:
+		jButtonRed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redCircle.png")));
+        }//GEN-LAST:event_jButtonRedMouseExited
+
+        private void jButtonYellowMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonYellowMouseEntered
+                // TODO add your handling code here:
+		jButtonYellow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/yellowCircleH.png")));
+        }//GEN-LAST:event_jButtonYellowMouseEntered
+
+        private void jButtonYellowMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonYellowMouseExited
+                // TODO add your handling code here:
+		jButtonYellow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/yellowCircle.png")));
+        }//GEN-LAST:event_jButtonYellowMouseExited
+
+        private void jButtonGreenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGreenMouseEntered
+                // TODO add your handling code here:
+		jButtonGreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/greenCircleH.png")));
+        }//GEN-LAST:event_jButtonGreenMouseEntered
+
+        private void jButtonGreenMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonGreenMouseExited
+                // TODO add your handling code here:
+		jButtonGreen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/greenCircle.png")));
+        }//GEN-LAST:event_jButtonGreenMouseExited
+
+        private void jButtonPurpleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonPurpleMouseEntered
+                // TODO add your handling code here:
+		jButtonPurple.setIcon(new javax.swing.ImageIcon(getClass().getResource("/purpleCircleH.png")));
+        }//GEN-LAST:event_jButtonPurpleMouseEntered
+
+        private void jButtonPurpleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonPurpleMouseExited
+                // TODO add your handling code here:
+		jButtonPurple.setIcon(new javax.swing.ImageIcon(getClass().getResource("/purpleCircle.png")));
+        }//GEN-LAST:event_jButtonPurpleMouseExited
+
+        private void jButtonBlueMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBlueMouseEntered
+                // TODO add your handling code here:
+		jButtonBlue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/blueCircleH.png")));
+        }//GEN-LAST:event_jButtonBlueMouseEntered
+
+        private void jButtonBlueMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonBlueMouseExited
+                // TODO add your handling code here:
+		jButtonBlue.setIcon(new javax.swing.ImageIcon(getClass().getResource("/blueCircle.png")));
+        }//GEN-LAST:event_jButtonBlueMouseExited
 
 
         // Variables declaration - do not modify//GEN-BEGIN:variables

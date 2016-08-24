@@ -7,6 +7,7 @@ project 1.0
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -28,6 +29,7 @@ public class HangMan extends javax.swing.JFrame {
 	 */
 	private BufferedReader br;
 	private BufferedWriter bw;
+	private F1Display f1;
 	
 	public HangMan() {
 		initComponents();
@@ -35,12 +37,14 @@ public class HangMan extends javax.swing.JFrame {
 		setLocationRelativeTo(null);
 		setSize(600, 400);
 		getContentPane().setBackground(new java.awt.Color(0, 0, 0));
+		f1 = new F1Display();
+		getContentPane().add(f1);
+		f1.setVisible(false);
 	}
 	public void windowClosing(WindowEvent e) throws IOException {
 		br.close();
 		//bw.close();
 	}
-
 	/**
 	 * This method is called from within the constructor to initialize the
 	 * form. WARNING: Do NOT modify this code. The content of this method is
@@ -51,6 +55,11 @@ public class HangMan extends javax.swing.JFrame {
         private void initComponents() {
 
                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+                addKeyListener(new java.awt.event.KeyAdapter() {
+                        public void keyPressed(java.awt.event.KeyEvent evt) {
+                                KeyPressed(evt);
+                        }
+                });
 
                 javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
                 getContentPane().setLayout(layout);
@@ -65,6 +74,17 @@ public class HangMan extends javax.swing.JFrame {
 
                 pack();
         }// </editor-fold>//GEN-END:initComponents
+
+        private void KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_KeyPressed
+                // TODO add your handling code here:
+		 int key = evt.getKeyCode();
+
+		 if (key == KeyEvent.VK_F1)
+			f1.setVisible(true);
+		 else if (key == KeyEvent.VK_ESCAPE)
+			 System.exit(0);
+
+        }//GEN-LAST:event_KeyPressed
 
 	/**
 	 * @param args the command line arguments

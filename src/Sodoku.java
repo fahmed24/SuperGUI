@@ -274,6 +274,11 @@ public class Sodoku extends javax.swing.JPanel {
                 });
 
                 jButton2.setText("Quit");
+                jButton2.addActionListener(new java.awt.event.ActionListener() {
+                        public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                jButton2ActionPerformed(evt);
+                        }
+                });
 
                 jLabel3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
                 jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -1961,6 +1966,16 @@ public class Sodoku extends javax.swing.JPanel {
 		if (checkValidInput(jTextField79.getText()))
 			results[8][7] = Integer.valueOf(jTextField79.getText());
         }//GEN-LAST:event_jTextField79FocusLost
+
+        private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+		try {
+			// TODO add your handling code here:
+			score = 0;
+			endGamePanel();
+		} catch (IOException ex) {
+			Logger.getLogger(Sodoku.class.getName()).log(Level.SEVERE, null, ex);
+		}
+        }//GEN-LAST:event_jButton2ActionPerformed
 
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
