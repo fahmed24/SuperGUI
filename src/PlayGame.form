@@ -72,7 +72,7 @@
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jButtonSkip" alignment="1" min="-2" pref="81" max="-2" attributes="0"/>
-                          <Component id="jLabelDate" alignment="1" min="-2" pref="145" max="-2" attributes="0"/>
+                          <Component id="jLabelDate" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -155,7 +155,7 @@
                   </Group>
                   <Component id="jLabelImage" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jLabelDate" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="jLabelDate" min="-2" pref="26" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jButtonSkip" min="-2" max="-2" attributes="0"/>
                   </Group>

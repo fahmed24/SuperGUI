@@ -27,18 +27,10 @@ public class PlayGame extends javax.swing.JPanel {
 	private EndGamePanel endGamePanel;
 	private Random randNum;
 
-	public PlayGame(JFrame hangMan, JPanel menu, ColorGame colorGame) {
+	public PlayGame(ColorGame colorGame) {
 		initComponents();
 		setBounds(0,0,600,400);
 		this.colorGame = colorGame;	
-		
-		//Create EndGamePanel 
-		//endGamePanel = new EndGamePanel(menu);
-		//Reference to hangMan JFrame
-		//hangMan.getContentPane().add(endGamePanel);
-		//Hide EndGamePanel for now
-		//endGamePanel.setVisible(false);
-		//Random number generator	
 		randNum = new Random();
 		
 		//Calendar
@@ -612,7 +604,7 @@ public class PlayGame extends javax.swing.JPanel {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(jButtonSkip, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(jLabelDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                        .addComponent(jLabelDate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addContainerGap())))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap(23, Short.MAX_VALUE)
@@ -684,7 +676,7 @@ public class PlayGame extends javax.swing.JPanel {
                                                         .addComponent(jLabelScoreValue)))
                                         .addComponent(jLabelImage)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabelDate, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(jButtonSkip)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

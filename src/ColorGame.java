@@ -1,9 +1,5 @@
 
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -35,20 +31,14 @@ public class ColorGame extends javax.swing.JPanel {
 	private int hangManScore = 0;
 	private int score = 0;
 	private int roundCount = 1;
-	private EndGamePanel endGamePanel;
 	private PlayGame playGame;
+	private Sodoku sodoku;
 
-	public ColorGame(JPanel menu, JFrame hangMan) throws IOException {
+	public ColorGame(Sodoku sodoku) throws IOException {
 		initComponents();
 		setBounds(0,0,600,400);
 		random = new Random();
-
-		//Create EndGamePanel 
-		endGamePanel = new EndGamePanel(hangMan, menu);
-		//Reference to hangMan JFrame
-		hangMan.getContentPane().add(endGamePanel);
-		//Hide EndGamePanel for now
-		endGamePanel.setVisible(false);
+		this.sodoku = sodoku;
 
 		handleText();
 		dateTime();
@@ -86,7 +76,7 @@ public class ColorGame extends javax.swing.JPanel {
 		if (roundCount >= 6) {
 			roundCount = 1;
 			try {
-				endGamePanel();
+				nextGame();
 			} catch (IOException ex) {
 				Logger.getLogger(ColorGame.class.getName()).log(Level.SEVERE, null, ex);
 			}
@@ -127,13 +117,13 @@ public class ColorGame extends javax.swing.JPanel {
 		if (fontColor.equals(color))
 			score += 100;
 	}
-	public void endGamePanel() throws IOException {
+	public void nextGame() throws IOException {
 			//Set this PlayGame panel to not visibile
 			this.setVisible(false);
 			//Show the EndGamePanel
-			endGamePanel.setVisible(true);
+			sodoku.setVisible(true);
 			//Set score
-			endGamePanel.setScore(hangManScore + score);
+			sodoku.setScore(hangManScore + this.score);
 			score = 0;
 	}
 	/**

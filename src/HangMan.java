@@ -110,18 +110,23 @@ public class HangMan extends javax.swing.JFrame {
 		MainMenu menu = new MainMenu();
 
 
-		//Create ColorGame panel here
-		ColorGame colorGame = new ColorGame(menu, hangMan);
-		hangMan.getContentPane().add(colorGame);
-		colorGame.setVisible(false);
 
 		//Create PlayGame screen
 
+		//Create Sodoku panel here
+		Sodoku sodoku = new Sodoku(hangMan, menu);
+		hangMan.getContentPane().add(sodoku);
+		sodoku.setVisible(false);
+
+		//Create ColorGame panel here
+		ColorGame colorGame = new ColorGame(sodoku);
+		hangMan.getContentPane().add(colorGame);
+		colorGame.setVisible(false);
+
 		//Temporary removal of hangman to jump to circleGame
-		PlayGame playGame = new PlayGame(hangMan, menu, colorGame);
+		PlayGame playGame = new PlayGame(colorGame);
 		hangMan.getContentPane().add(playGame);
 		playGame.setVisible(false);
-
 
 
 		//Create HighScores screen
@@ -140,6 +145,7 @@ public class HangMan extends javax.swing.JFrame {
 				menu.setVisible(false);
 				playGame.resetGame();
 				playGame.setVisible(true);
+				//sodoku.setVisible(true);
 
 			}
 		};
